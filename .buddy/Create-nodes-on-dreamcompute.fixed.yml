@@ -9,8 +9,8 @@
     docker_image_name: "library/ubuntu"
     docker_image_tag: "20.04"
     execute_commands:
-    - "export ROSARIO=rosario"
     - "source ./openrc.sh"
+    - "env | grep OS_"
     shell: "BASH"
   - action: "terraform plan -input=false"
     type: "TERRAFORM"
