@@ -9,5 +9,6 @@
     version: "latest"
     execute_commands:
     - "terraform init -input=false"
-    - "terraform plan -input=false"
-    - "#terraform apply -auto-approve -input=false"
+    - "terraform validate"
+    - "terraform plan -input=false -refresh-only"
+    - "terraform apply -auto-approve -input=false"
