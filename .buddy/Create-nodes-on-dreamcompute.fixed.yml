@@ -17,7 +17,7 @@
     docker_image_name: "library/ubuntu"
     docker_image_tag: "20.04"
     execute_commands:
-    - "env"
+    - "env | grep ROSARIO"
     shell: "BASH"
   - action: "terraform plan -input=false"
     type: "TERRAFORM"
