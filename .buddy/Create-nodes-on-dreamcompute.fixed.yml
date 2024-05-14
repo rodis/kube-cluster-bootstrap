@@ -19,5 +19,3 @@
     - "terraform validate"
     - "terraform plan -input=false -refresh-only"
     - "terraform apply -auto-approve -input=false"
-    setup_commands:
-    - "source openrc.sh"
