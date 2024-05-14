@@ -3,3 +3,11 @@
   refs:
   - "refs/heads/main"
   fail_on_prepare_env_warning: true
+  actions:
+  - action: "terraform plan -input=false"
+    type: "TERRAFORM"
+    version: "latest"
+    execute_commands:
+    - "terraform init -input=false"
+    - "terraform plan -input=false"
+    - "#terraform apply -auto-approve -input=false"
