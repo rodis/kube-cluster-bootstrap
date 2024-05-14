@@ -12,13 +12,6 @@
     - "export ROSARIO=rosario"
     - "source ./openrc.sh"
     shell: "BASH"
-  - action: "env"
-    type: "BUILD"
-    docker_image_name: "library/ubuntu"
-    docker_image_tag: "20.04"
-    execute_commands:
-    - "env"
-    shell: "BASH"
   - action: "terraform plan -input=false"
     type: "TERRAFORM"
     version: "latest"
