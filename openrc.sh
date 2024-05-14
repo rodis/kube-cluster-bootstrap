@@ -22,11 +22,6 @@ if [ -z "$OS_USER_DOMAIN_NAME" ]; then unset OS_USER_DOMAIN_NAME; fi
 unset OS_TENANT_ID
 unset OS_TENANT_NAME
 
-# In addition to the owning entity (tenant), OpenStack stores the entity
-# performing the action as the **user**.
-export OS_USERNAME="rods"
-
-
 # If your configuration has multiple regions, we set that information here.
 # OS_REGION_NAME is optional and only valid in certain environments.
 export OS_REGION_NAME="RegionOne"
