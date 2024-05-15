@@ -25,3 +25,5 @@ blocks:
           value: RegionOne
         - name: OS_USER_DOMAIN_NAME
           value: Default
+      secrets:
+        - name: Openstack Credentials
