@@ -10,6 +10,7 @@ blocks:
       jobs:
         - name: Run Terraform
           commands:
+            - ls -lah
             - terraform init -input=false
             - terraform validate
             - terraform plan -input=false -refresh-only
