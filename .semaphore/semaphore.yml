@@ -11,6 +11,7 @@ blocks:
         - name: Pull the git repo
           commands:
             - checkout
+            - ls -lah
   - name: Bootstrap Openstack Nodes
     task:
       jobs:
