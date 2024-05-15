@@ -5,19 +5,12 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: 'Checkout '
-    task:
-      jobs:
-        - name: Pull the git repo
-          commands:
-            - checkout
-            - ls -lah
   - name: Bootstrap Openstack Nodes
     task:
       jobs:
         - name: Run Terraform
           commands:
-            - ls -lah
+            - checkout
             - terraform init -input=false
             - terraform validate
             - terraform plan -input=false -refresh-only
