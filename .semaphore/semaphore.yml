@@ -10,6 +10,9 @@ blocks:
       jobs:
         - name: Run Terraform
           commands:
+            - checkout
+        - name: 'Job #2'
+          commands:
             - ls -lah
             - terraform init -input=false
             - terraform validate
