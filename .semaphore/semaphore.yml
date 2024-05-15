@@ -10,7 +10,6 @@ blocks:
       jobs:
         - name: Run Terraform
           commands:
-            - checkout
             - terraform init -input=false
             - terraform validate
             - terraform plan -input=false -refresh-only
@@ -28,3 +27,6 @@ blocks:
           value: Default
       secrets:
         - name: Openstack Credentials
+      prologue:
+        commands:
+          - checkout
