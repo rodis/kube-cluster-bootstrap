@@ -21,3 +21,13 @@ resource "openstack_networking_secgroup_v2" "kube_api_server_sec_group" {
   description = "Security group for allowing Kube API server to talk with Kubelet"
   delete_default_rules = false
 }
+
+# Allow tcp on port 10250 for IPv4 within security group (Kubelet API)
+resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol  = "tcp"
+  port_range_min = 10250
+  port_range_max = 10250
+  security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
+}
