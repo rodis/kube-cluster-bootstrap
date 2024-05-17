@@ -71,3 +71,18 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_udp_8472_ipv4" {
   port_range_max = 8472
   security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
 }
+
+
+
+resource "openstack_compute_instance_v2" "master" {
+  name = "k8s-west-master"
+  image_name = "Ubuntu-22.04"
+  flavor_name = "gp1.warpspeed"
+
+  key_pair = "dh_machines"
+  security_groups = [ "default", openstack_networking_secgroup_v2.kube_api_server_sec_group.name ]
+
+  network {
+    name = "public"
+  }
+}
