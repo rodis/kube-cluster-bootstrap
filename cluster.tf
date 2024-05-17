@@ -73,6 +73,10 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_udp_8472_ipv4" {
 }
 
 
+resource "openstack_blockstorage_volume_v3" "master-vol" {
+  name = "k8s-west-master-volume"
+  size = 150
+}
 
 resource "openstack_compute_instance_v2" "master" {
   name = "k8s-west-master"
@@ -85,4 +89,9 @@ resource "openstack_compute_instance_v2" "master" {
   network {
     name = "public"
   }
+}
+
+resource "openstack_compute_volume_attach_v2" "master-vol-attached" {
+  instance_id = openstack_compute_instance_v2.master.id
+  volume_id   = openstack_blockstorage_volume_v3.master-vol.id
 }
