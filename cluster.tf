@@ -31,3 +31,23 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
   port_range_max = 10250
   security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
 }
+
+# Allow tcp on port 10257 for IPv4 within security group (Kubelet API)
+resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10257_ipv4" {
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol  = "tcp"
+  port_range_min = 10257
+  port_range_max = 10257
+  security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
+}
+
+# Allow tcp on port 10259 for IPv4 within security group (Kubelet API)
+resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10259_ipv4" {
+  direction = "ingress"
+  ethertype = "IPv4"
+  protocol  = "tcp"
+  port_range_min = 10259
+  port_range_max = 10259
+  security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
+}
