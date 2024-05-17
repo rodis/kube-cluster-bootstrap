@@ -72,26 +72,22 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_udp_8472_ipv4" {
   security_group_id = openstack_networking_secgroup_v2.kube_api_server_sec_group.id
 }
 
-
-resource "openstack_blockstorage_volume_v3" "master-vol" {
-  name = "k8s-west-master-volume"
-  size = 150
-}
-
 resource "openstack_compute_instance_v2" "master" {
   name = "k8s-west-master"
-  image_name = "Ubuntu-22.04"
   flavor_name = "gp1.warpspeed"
-
   key_pair = "dh_machines"
   security_groups = [ "default", openstack_networking_secgroup_v2.kube_api_server_sec_group.name ]
+
+  block_device {
+    uuid                  = "2b2c61c6-324c-47f4-88c1-9ae8a978ddfd"
+    source_type           = "image"
+    volume_size           = 150
+    boot_index            = 0
+    destination_type      = "volume"
+    delete_on_termination = false
+  }
 
   network {
     name = "public"
   }
-}
-
-resource "openstack_compute_volume_attach_v2" "master-vol-attached" {
-  instance_id = openstack_compute_instance_v2.master.id
-  volume_id   = openstack_blockstorage_volume_v3.master-vol.id
 }
