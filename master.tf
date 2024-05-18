@@ -1,5 +1,5 @@
 resource "openstack_compute_instance_v2" "master" {
-  name = "k8s-west-master"
+  name = "k8s-${var.PROJECT_NAME}-master"
   flavor_name = "gp1.warpspeed"
   key_pair = "dh_machines"
   security_groups = [ "default", openstack_networking_secgroup_v2.kube_api_server_sec_group.name ]
