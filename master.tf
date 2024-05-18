@@ -9,7 +9,7 @@ resource "openstack_compute_instance_v2" "master" {
   ]
 
   block_device {
-    uuid                  = var.image
+    uuid                  = var.image_uuid
     source_type           = "image"
     volume_size           = var.volume_size
     boot_index            = 0
