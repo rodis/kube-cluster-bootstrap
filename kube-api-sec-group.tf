@@ -5,7 +5,7 @@ resource "openstack_networking_secgroup_v2" "kube_api_server_sec_group" {
 }
 
 # Allow tcp on port 6443 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_6443_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_tcp_6443_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -15,7 +15,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_6443_ipv4" {
 }
 
 # Allow tcp on port 10250 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_tcp_10250_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -25,7 +25,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
 }
 
 # Allow tcp on port 10257 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10257_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_tcp_10257_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -35,7 +35,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10257_ipv4" {
 }
 
 # Allow tcp on port 10259 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10259_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_tcp_10259_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -45,7 +45,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10259_ipv4" {
 }
 
 # Allow udp on port 8472 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_udp_8472_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_udp_8472_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "udp"

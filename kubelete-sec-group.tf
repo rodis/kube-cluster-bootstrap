@@ -5,7 +5,7 @@ resource "openstack_networking_secgroup_v2" "kubelet_sec_group" {
 }
 
 # Allow tcp on port 10250 for IPv4 within security group (Kubelet)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kubelet_tcp_10250_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -15,7 +15,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10250_ipv4" {
 }
 
 # Allow tcp on port 10256 for IPv4 within security group (Kubelet)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10256_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kubelet_tcp_10256_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
@@ -25,7 +25,7 @@ resource "openstack_networking_secgroup_rule_v2" "rule_k8s_tcp_10256_ipv4" {
 }
 
 # Allow udp on port 8472 for IPv4 within security group (Kubelet)
-resource "openstack_networking_secgroup_rule_v2" "rule_k8s_udp_8472_ipv4" {
+resource "openstack_networking_secgroup_rule_v2" "rule_kubelet_udp_8472_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "udp"
