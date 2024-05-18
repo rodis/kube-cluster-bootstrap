@@ -21,3 +21,7 @@ variable "volume_size" {
 variable "network" {
   default = "public"
 }
+
+variable "nodes" {
+  default = 4
+}
