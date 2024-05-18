@@ -1,19 +1,23 @@
 resource "openstack_compute_instance_v2" "master" {
-  name = "k8s-${var.PROJECT_NAME}-master"
+  name = "k8s-${var.INTERNAL_AZ}-master"
   flavor_name = "gp1.warpspeed"
-  key_pair = "dh_machines"
-  security_groups = [ "default", openstack_networking_secgroup_v2.kube_api_server_sec_group.name, openstack_networking_secgroup_v2.etcd_sec_group.name ]
+  key_pair = var.key_pair
+  security_groups = [
+    "default",
+    openstack_networking_secgroup_v2.kube_api_server_sec_group.name,
+    openstack_networking_secgroup_v2.etcd_sec_group.name
+  ]
 
   block_device {
-    uuid                  = "2b2c61c6-324c-47f4-88c1-9ae8a978ddfd"
+    uuid                  = var.image
     source_type           = "image"
-    volume_size           = 150
+    volume_size           = var.volume_size
     boot_index            = 0
     destination_type      = "volume"
     delete_on_termination = false
   }
 
   network {
-    name = "public"
+    name = var.network
   }
 }
