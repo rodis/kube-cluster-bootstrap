@@ -10,8 +10,8 @@ variable "key_pair" {
   default = "dh_machines"
 }
 
-variable "image_uuid" {
-  default = "de58244a-7670-4e80-b6fe-5290f099b53e"
+variable "IMAGE_UUID" {
+  type = string
 }
 
 variable "volume_size" {
