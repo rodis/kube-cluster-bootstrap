@@ -11,11 +11,11 @@ variable "key_pair" {
 }
 
 variable "image_uuid" {
-  default = "2b2c61c6-324c-47f4-88c1-9ae8a978ddfd"
+  default = "de58244a-7670-4e80-b6fe-5290f099b53e"
 }
 
 variable "volume_size" {
-  default = 150
+  default = 100
 }
 
 variable "network" {
