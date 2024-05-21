@@ -22,5 +22,5 @@ resource "openstack_compute_instance_v2" "master" {
     name = var.network
   }
 
-  tags ["k8s_masters"]
+  tags = ["k8s_masters"]
 }
