@@ -22,5 +22,7 @@ resource "openstack_compute_instance_v2" "master" {
     name = var.network
   }
 
-  tags = ["k8s_masters"]
+  metadata = {
+    groups = "kube_control_plane,kube_node,etcd"
+  }
 }

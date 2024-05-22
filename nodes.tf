@@ -20,4 +20,8 @@ resource "openstack_compute_instance_v2" "node" {
   network {
     name = var.network
   }
+
+  metadata = {
+    groups = "kube_node"
+  }
 }
