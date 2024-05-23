@@ -14,14 +14,14 @@ variable "IMAGE_UUID" {
   type = string
 }
 
-variable "volume_size" {
-  default = 100
+variable "VOLUME_SIZE" {
+  default = 150
 }
 
 variable "network" {
   default = "public"
 }
 
-variable "nodes" {
+variable "NODES" {
   default = 4
 }
