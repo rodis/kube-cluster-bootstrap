@@ -1,5 +1,4 @@
-- hosts: workers
-  become: yes
+- hosts: kube_node
   tasks:
     - name: Install nfs-common
       ansible.builtin.apt:
