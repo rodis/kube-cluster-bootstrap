@@ -28,5 +28,5 @@ variable "NODES" {
 
 variable "create_master" {
   type = boolean
-  default = var.INTERNAL_AZ == "west" ? true : false
+  default = INTERNAL_AZ == "west" ? true : false
 }
