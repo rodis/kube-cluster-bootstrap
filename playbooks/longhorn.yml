@@ -1,0 +1,15 @@
+- hosts: workers
+  become: yes
+  tasks:
+    - name: Install nfs-common
+      ansible.builtin.apt:
+        name: nfs-common
+    - name: Configure multipath
+      ansible.builtin.template:
+        src: templates/multipath.conf
+        dest: /etc/multipath.conf
+        mode: '0644'
+    - name: Restart service multipathd
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: multipathd.service
