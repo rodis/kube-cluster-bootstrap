@@ -1,6 +1,6 @@
 ---
 - name: Update and upgrade apt packages
-  hosts: iad-2
+  hosts: k8s_cluster
   become: yes
 
   tasks:

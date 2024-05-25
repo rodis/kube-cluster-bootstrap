@@ -24,6 +24,6 @@ resource "openstack_compute_instance_v2" "master" {
   }
 
   metadata = {
-    groups = "kube_control_plane,kube_node,etcd"
+    groups = "kube_control_plane"
   }
 }
