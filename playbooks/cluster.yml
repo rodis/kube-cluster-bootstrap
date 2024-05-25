@@ -3,3 +3,6 @@
 
 - name: Install Kubernetes master
   ansible.builtin.import_playbook: kubernetes/master.yml
+
+- name: Install Kubernetes workers
+  ansible.builtin.import_playbook: kubernetes/workers.yml
