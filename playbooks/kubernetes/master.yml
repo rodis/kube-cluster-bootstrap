@@ -1,4 +1,4 @@
-hosts: kube_control_plane
+- hosts: kube_control_plane
   tasks:
     - name: create an empty file for Kubeadm configuring
       copy:
