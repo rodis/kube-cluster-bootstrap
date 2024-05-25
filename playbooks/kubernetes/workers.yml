@@ -12,10 +12,10 @@
 - hosts: kube_node
   tasks:
     - name: TCP port 6443 on master is reachable from worker
-      wait_for: "host={{ groups['kube_control_plane'][0]['ansible_default_ipv4']['address'] }} port=6443 timeout=1"
+      wait_for: "host={{ hostvars['k8s-west-master']['ansible_default_ipv4']['address'] }} port=6443 timeout=1"
 
     - name: join cluster
-      shell: "{{ hostvars['k8s-master-1'].join_command }} >> node_joined.log"
+      shell: "{{ hostvars['k8s-west-master'].join_command }} >> node_joined.log"
       args:
         chdir: /home/ubuntu
         creates: node_joined.log
