@@ -25,3 +25,8 @@ variable "network" {
 variable "NODES" {
   default = 4
 }
+
+variable "create_master" {
+  type: boolean
+  default = var.INTERNAL_AZ == "west" ? true : false
+}
