@@ -1,5 +1,5 @@
 resource "openstack_compute_instance_v2" "master" {
-  count = var.INTERNAL_AZ == "west" ? 1 : 0
+  count = var.INTERNAL_AZ == "west" || var.INTERNAL_AZ == "north" ? 1 : 0
   name = "k8s-${var.INTERNAL_AZ}-master"
   flavor_name = var.flavor_name
   key_pair = var.key_pair
