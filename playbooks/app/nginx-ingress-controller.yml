@@ -11,6 +11,6 @@
         values:
           service:
             externalIPs:
-              - {{ hostvars[groups['nginx_controller'][0]]['ansible_default_ipv4']['address'] }}
+              - "{{ hostvars[groups['nginx_controller'][0]]['ansible_default_ipv4']['address'] }}"
           nodeSelector:
-            kubernetes.io/hostname: {{ groups['nginx_controller'][0] }}
+            kubernetes.io/hostname: "{{ groups['nginx_controller'][0] }}"
