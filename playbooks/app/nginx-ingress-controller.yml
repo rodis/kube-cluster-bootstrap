@@ -1,16 +1,16 @@
 ---
 - hosts: kube_control_plane
   become: false
-  #vars:
-  #   helm_chart_url: "https://charts.bitnami.com/bitnami"
   tasks:
-  #    - name: Add bitnami helm repo
-  #      kubernetes.core.helm_repository:
-  #        name: bitnami
-  #        repo_url: "{{ helm_chart_url }}"
-      - name: Install Nginx Chart
-        kubernetes.core.helm:
-          name: nginx-controller
-          release_namespace: nginx-controller
-          create_namespace: true
-          chart_ref: oci://registry-1.docker.io/bitnamicharts/nginx-ingress-controller
+    - name: Install Nginx Chart
+      kubernetes.core.helm:
+        name: nginx-controller
+        release_namespace: nginx-controller
+        create_namespace: true
+        chart_ref: oci://registry-1.docker.io/bitnamicharts/nginx-ingress-controller
+        values:
+          service:
+            externalIPs:
+              - {{ hostvars[groups['nginx_controller'][0]]['ansible_default_ipv4']['address'] }}
+          nodeSelector:
+            kubernetes.io/hostname: {{ groups['nginx_controller'][0] }}
