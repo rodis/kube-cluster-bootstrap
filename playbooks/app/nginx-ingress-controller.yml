@@ -1,5 +1,6 @@
 ---
 - hosts: kube_control_plane
+  become: false
   #vars:
   #   helm_chart_url: "https://charts.bitnami.com/bitnami"
   tasks:
