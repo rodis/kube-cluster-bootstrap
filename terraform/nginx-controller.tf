@@ -23,6 +23,6 @@ resource "openstack_compute_instance_v2" "nginx-controller" {
   }
 
   metadata = {
-    groups = "kube_node"
+    groups = "kube_node,nginx_controller"
   }
 }
