@@ -1,5 +1,5 @@
 resource "openstack_compute_instance_v2" "node" {
-  count = local.create_master ? var.NODES : var.NODES + 1
+  count = local.is_control_tenant ? var.NODES : var.NODES + 1
   name = "k8s-${var.INTERNAL_AZ}-node-${count.index+1}"
   flavor_name = var.flavor_name
   key_pair = var.key_pair
