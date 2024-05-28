@@ -1,0 +1,13 @@
+---
+- hosts: kube_control_plane
+  become: false
+  tasks:
+    - name: Install Cert Manager Chart
+      kubernetes.core.helm:
+        name: cert-manager
+        release_namespace: cert-manager
+        create_namespace: true
+        chart_ref: oci://registry-1.docker.io/bitnamicharts/cert-manager
+        set_values:
+          - value: installCRDs=true
+            value_type: string

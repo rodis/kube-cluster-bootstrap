@@ -1,5 +1,8 @@
 - name: Install the nginx ingress controller
   ansible.builtin.import_playbook: app/nginx-ingress-controller.yml
 
+- name: Install cert manager
+  ansible.builtin.import_playbook: app/cert-manager.yml
+
 - name: Install longhorn storage
   ansible.builtin.import_playbook: app/longhorn.yml
