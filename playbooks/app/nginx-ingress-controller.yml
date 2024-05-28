@@ -2,7 +2,6 @@
 - hosts: kube_control_plane
   become: false
   tasks:
-  tasks:
     - name: Gather nginx controller ip info
       setup:
       delegate_to: "{{item}}"
