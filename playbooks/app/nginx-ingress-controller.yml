@@ -1,4 +1,8 @@
 ---
+- hosts: nginx_controller:
+  tasks:
+    - setup
+
 - hosts: kube_control_plane
   become: false
   tasks:
@@ -11,7 +15,6 @@
         values:
           service:
             externalIPs:
-              #- 208.113.134.71
               - "{{ hostvars[groups['nginx_controller'][0]]['ansible_default_ipv4']['address'] }}"
           nodeSelector:
             kubernetes.io/hostname: "{{ groups['nginx_controller'][0] }}"
