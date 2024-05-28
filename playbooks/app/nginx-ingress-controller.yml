@@ -1,8 +1,4 @@
 ---
-- hosts: nginx_controller
-  tasks:
-    - setup
-
 - hosts: kube_control_plane
   become: false
   tasks:
