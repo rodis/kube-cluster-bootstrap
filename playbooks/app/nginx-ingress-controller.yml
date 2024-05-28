@@ -7,6 +7,10 @@
       delegate_to: "{{item}}"
       with_items: "{{groups['nginx_controller']}}"
       when: "{{hostvars[item]['ansible_default_ipv4'] is not defined}}"
+    
+    - name: Display all variables/facts known for a host
+      debug:
+        var: hostvars
 
     - name: Install Nginx Chart
       kubernetes.core.helm:
