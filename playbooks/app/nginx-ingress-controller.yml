@@ -1,5 +1,5 @@
 ---
-- hosts: nginx_controller:
+- hosts: nginx_controller
   tasks:
     - setup
 
