@@ -1,1 +1,2 @@
-- src: geerlingguy.helm
+roles:
+  - name: geerlingguy.helm
