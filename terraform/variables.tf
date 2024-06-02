@@ -23,5 +23,5 @@ variable "network" {
 }
 
 variable "NODES" {
-  default = 4
+  default = 5
 }
