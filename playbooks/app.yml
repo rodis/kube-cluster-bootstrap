@@ -1,3 +1,6 @@
+- name: Install helm binary on master
+  ansible.builtin.import_playbook: app/helm.yml
+
 - name: Install the nginx ingress controller
   ansible.builtin.import_playbook: app/nginx-ingress-controller.yml
 
