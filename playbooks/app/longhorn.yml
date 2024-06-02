@@ -28,3 +28,18 @@
         chart_ref: longhorn/longhorn
         chart_version: 1.6.2
         wait: true
+        values:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            host: longhorn.rods.duckdns.org
+            tls: true
+            tlsSecret: longhorn-le-ui
+            path: /
+            annotations:
+              nginx.ingress.kubernetes.io/auth-type: basic
+              nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+              nginx.ingress.kubernetes.io/auth-secret: longhorn-ui
+              nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required '
+              nginx.ingress.kubernetes.io/proxy-body-size: 10000m
+              cert-manager.io/cluster-issuer: letsencrypt-prod
