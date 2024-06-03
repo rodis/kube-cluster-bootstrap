@@ -32,7 +32,7 @@
           ingress:
             enabled: true
             ingressClassName: nginx
-            host: longhorn.rods.duckdns.org
+            host: longhorn."{{ lookup('ansible.builtin.env', 'APP_DOMAIN' }}"
             tls: true
             tlsSecret: longhorn-le-ui
             path: /
