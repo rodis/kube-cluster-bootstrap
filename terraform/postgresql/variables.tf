@@ -15,7 +15,7 @@ variable "IMAGE_UUID" {
 }
 
 variable "VOLUME_SIZE" {
-  default = 50
+  default = 100
 }
 
 variable "network" {
