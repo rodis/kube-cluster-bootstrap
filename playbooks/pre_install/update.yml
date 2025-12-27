@@ -1,6 +1,6 @@
 ---
 - name: Update and upgrade apt packages
-  hosts: k8s_cluster
+  hosts: all
   become: yes
 
   tasks:
