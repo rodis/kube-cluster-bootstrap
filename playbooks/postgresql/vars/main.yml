@@ -1,0 +1,6 @@
+postgresql_databases:
+  - name: awx
+postgresql_users:
+  - name: rosario
+    password: rosario
+postgresql_python_library: python3-psycopg2
