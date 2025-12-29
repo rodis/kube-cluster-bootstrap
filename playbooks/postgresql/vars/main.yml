@@ -5,6 +5,10 @@ postgresql_users:
     password: rosario
 postgresql_python_library: python3-psycopg2
 postgresql_global_config_options:
+  - option: unix_socket_directories
+    value: '{{ postgresql_unix_socket_directories | join(",") }}'
+  - option: log_directory
+    value: 'log'
   - option: listen_addresses
     value: '*'
 postgresql_hba_entries:
