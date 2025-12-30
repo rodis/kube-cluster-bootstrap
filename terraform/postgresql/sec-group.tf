@@ -1,11 +1,11 @@
 resource "openstack_networking_secgroup_v2" "postgres_sec_group" {
-  name = "Postgres security group"
+  name = "Postgres"
   description = "Security group to allow outside connection to the server"
   delete_default_rules = false
 }
 
-# Allow tcp on port 6443 for IPv4 within security group (Kube API server)
-resource "openstack_networking_secgroup_rule_v2" "rule_kube_api_tcp_6443_ipv4" {
+# Allow tcp connection on port 5432 for IPv4
+resource "openstack_networking_secgroup_rule_v2" "rule_postgres_tcp_5432_ipv4" {
   direction = "ingress"
   ethertype = "IPv4"
   protocol  = "tcp"
