@@ -25,5 +25,6 @@ postgresql_privs:
   - db: awx
     roles: awx
     privs: ALL
-    objs: ALL_IN_SCHEMA
+    type: schema
+    objs: public
 postgres_users_no_log: false
