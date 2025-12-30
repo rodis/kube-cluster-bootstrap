@@ -3,12 +3,13 @@ resource "openstack_compute_instance_v2" "master" {
   flavor_name = var.flavor_name
   key_pair = var.key_pair
   security_groups = [
-    "default"
+    "default",
+    "openstack_networking_secgroup_v2.postgres_sec_group.name"
   ]
 
   block_device {
-    uuid                  = var.IMAGE_UUID
-    source_type           = "image"
+    uuid                  = "d670e914-5239-41ff-b3a5-2c009f24c825"
+    source_type           = "volume"
     volume_size           = var.VOLUME_SIZE
     boot_index            = 0
     destination_type      = "volume"
