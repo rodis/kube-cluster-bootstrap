@@ -4,7 +4,7 @@ resource "openstack_compute_instance_v2" "master" {
   key_pair = var.key_pair
   security_groups = [
     "default",
-    "openstack_networking_secgroup_v2.postgres_sec_group.name"
+    openstack_networking_secgroup_v2.postgres_sec_group.name
   ]
 
   block_device {
