@@ -20,7 +20,7 @@ postgresql_hba_entries:
   postgresql_privs:
   - db: awx
     roles: awx
-    privs: All
+    privs: ALL
     type: database
   - db: public
     roles: awx
