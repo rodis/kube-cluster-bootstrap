@@ -14,6 +14,10 @@ variable "IMAGE_UUID" {
   type = string
 }
 
+variable "VOLUME_UUID" {
+  default = string
+}
+
 variable "VOLUME_SIZE" {
   default = 100
 }

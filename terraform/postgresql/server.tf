@@ -8,7 +8,7 @@ resource "openstack_compute_instance_v2" "master" {
   ]
 
   block_device {
-    uuid                  = "d670e914-5239-41ff-b3a5-2c009f24c825"
+    uuid                  = var.VOLUME_UUID
     source_type           = "volume"
     volume_size           = var.VOLUME_SIZE
     boot_index            = 0

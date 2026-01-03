@@ -1,8 +1,8 @@
 postgresql_databases:
-  - name: awx
+  - name: "{{ lookup('env', 'DB_NAME') }}"
 postgresql_users:
-  - name: awx
-    password: rosario
+  - name: "{{ lookup('env', 'DB_USER') }}"
+    password: "{{ lookup('env', 'DB_PASSWORD') }}"
 postgresql_python_library: python3-psycopg2
 postgresql_global_config_options:
   - option: unix_socket_directories
@@ -16,14 +16,14 @@ postgresql_hba_entries:
   - {type: local, database: all, user: all, auth_method: peer}
   - {type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: "{{ postgresql_auth_method }}"}
   - {type: host, database: all, user: all, address: '::1/128', auth_method: "{{ postgresql_auth_method }}"}
-  - {type: host, database: awx, user: awx, address: '0.0.0.0/0', auth_method: "{{ postgresql_auth_method }}"}
+  - {type: host, database: "{{ lookup('env', 'DB_NAME') }}", user: "{{ lookup('env', 'DB_USER') }}", address: '0.0.0.0/0', auth_method: "{{ postgresql_auth_method }}"}
 postgresql_privs:
-  - db: awx
-    roles: awx
+  - db: "{{ lookup('env', 'DB_NAME') }}"
+    roles: "{{ lookup('env', 'DB_USER') }}"
     privs: ALL
     type: database
-  - db: awx
-    roles: awx
+  - db: "{{ lookup('env', 'DB_NAME') }}"
+    roles: "{{ lookup('env', 'DB_USER') }}"
     privs: ALL
     type: schema
     objs: public
