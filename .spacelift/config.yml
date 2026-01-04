@@ -1,5 +1,0 @@
-stacks:
-    ansible-south-install-awx:
-        project_root: playbooks/app/awx
-    ansible-south-instal-postgresql-server:
-        project_root: playbooks/postgresql
