@@ -1,7 +1,7 @@
 - hosts: kube_control_plane
   become: false
   roles:
-    - kubernetes.core
+    - community.kubernetes
   tasks:
     - name: Create a temporary directory
       ansible.builtin.tempfile:

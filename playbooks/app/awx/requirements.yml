@@ -1,2 +1,2 @@
 roles:
-  - name: kubernetes.core
+  - name: community.kubernetes
