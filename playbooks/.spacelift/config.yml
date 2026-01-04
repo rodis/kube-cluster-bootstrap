@@ -1,3 +1,0 @@
-stacks:
-    ansible-south-install-awx:
-        project_root: playbooks/app/awx
