@@ -1,5 +1,5 @@
 - hosts: localhost
-  become: false
+  become: true
   tasks:
     - name: Create a temporary directory
       ansible.builtin.tempfile:
@@ -12,9 +12,9 @@
         dest: "{{ awx_operator_dir.path }}"
         version: 2.19.1
     - name: install pre-requisites
-      pip:
-        name:
-          - kubernetes 
+      apt:
+        name: python3-kubernetes
+        state: present
     - name: Create a k8s namespace for awx
       kubernetes.core.k8s:
         name: awx
