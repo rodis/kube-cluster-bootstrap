@@ -1,9 +1,0 @@
-- hosts: localhost
-  become: false
-  tasks:
-    - name: Install Ghost
-      kubernetes.core.helm:
-        name: ghost
-        release_namespace: ghost
-        create_namespace: true
-        chart_ref: oci://registry-1.docker.io/bitnamicharts/ghost

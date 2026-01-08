@@ -1,2 +1,0 @@
-- name: Install Kubernetes dependencies
-  ansible.builtin.import_playbook: pre_install/update.yml

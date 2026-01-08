@@ -1,4 +1,0 @@
-- hosts: kube_control_plane
-  roles:
-    - role: geerlingguy.helm
-      helm_version: 'v3.15.1'

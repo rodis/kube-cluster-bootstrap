@@ -1,3 +1,0 @@
-roles:
-  - name: geerlingguy.helm
-  - name: geerlingguy.postgresql

@@ -1,0 +1,8 @@
+- name: Install Kubernetes dependencies
+  ansible.builtin.import_playbook: ./kube-dependencies.yml
+
+- name: Install Kubernetes master
+  ansible.builtin.import_playbook: ./master.yml
+
+- name: Install Kubernetes workers
+  ansible.builtin.import_playbook: ./workers.yml
