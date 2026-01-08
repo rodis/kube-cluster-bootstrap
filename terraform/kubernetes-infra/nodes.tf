@@ -1,5 +1,6 @@
 resource "openstack_compute_instance_v2" "node" {
-  name = "k8s-${var.INTERNAL_AZ}-node-${var.NODES.index+1}"
+  count = var.NODES
+  name = "k8s-${var.INTERNAL_AZ}-node-${count.index+1}"
   image_id = var.IMAGE_UUID
   flavor_name = var.flavor_name
   key_pair = var.key_pair
