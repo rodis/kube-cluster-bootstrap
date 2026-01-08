@@ -7,7 +7,7 @@ resource "openstack_compute_instance_v2" "master" {
     "default",
     openstack_networking_secgroup_v2.kube_api_server_sec_group.name,
     openstack_networking_secgroup_v2.kubelet_sec_group.name,
-    openstack_networking_secgroup_v2.nginx_controller_sec_group.name
+    openstack_networking_secgroup_v2.nginx_controller_sec_group.name,
     openstack_networking_secgroup_v2.etcd_sec_group.name
   ]
 
