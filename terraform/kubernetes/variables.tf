@@ -22,6 +22,10 @@ variable "network" {
   default = "public"
 }
 
+variable "MASTERS" {
+  description = "Number of kubernetes masters"
+  type        = number
+}
 variable "NODES" {
-  default = 5
+  description = "Number of kubernetes nodes"
 }
