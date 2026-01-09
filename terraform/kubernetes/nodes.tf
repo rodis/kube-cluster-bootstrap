@@ -14,6 +14,6 @@ resource "openstack_compute_instance_v2" "node" {
   }
 
   metadata = {
-    groups = "kube_node,${var.INTERNAL_AZ}"
+    groups = "kube_node"
   }
 }
