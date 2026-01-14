@@ -16,6 +16,6 @@ resource "openstack_compute_instance_v2" "master" {
   }
 
   metadata = {
-    groups = "kube_control_plane,nginx_controller"
+    groups = "kube_control_plane"
   }
 }
