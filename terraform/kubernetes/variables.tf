@@ -14,10 +14,6 @@ variable "IMAGE_UUID" {
   type = string
 }
 
-variable "VOLUME_SIZE" {
-  default = 150
-}
-
 variable "network" {
   default = "public"
 }
@@ -28,4 +24,5 @@ variable "MASTERS" {
 }
 variable "NODES" {
   description = "Number of kubernetes nodes"
+  type = number
 }
