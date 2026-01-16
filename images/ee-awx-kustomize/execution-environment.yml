@@ -1,0 +1,12 @@
+---
+version: 3
+
+images:
+  base_image:
+    name: quay.io/ansible/awx-ee:24.6.1
+
+additional_build_steps:
+  append_base:
+    - RUN yum install -y helm kustomize
+    - RUN curl -LO https://dl.k8s.io/release/v1.34.3/bin/linux/amd64/kubectl
+    - RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
