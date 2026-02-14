@@ -2,7 +2,11 @@ variable "INTERNAL_AZ" {
   type = string
 }
 
-variable "flavor_name" {
+variable "master_flavor_name" {
+  default = "gp1.supersonic"
+}
+
+variable "node_flavor_name" {
   default = "gp1.warpspeed"
 }
 
