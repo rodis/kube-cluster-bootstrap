@@ -3,7 +3,7 @@ variable "INTERNAL_AZ" {
 }
 
 variable "master_flavor_name" {
-  default = "gp1.supersonic"
+  default = "gp1.warpspeed"
 }
 
 variable "node_flavor_name" {
