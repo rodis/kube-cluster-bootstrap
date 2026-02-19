@@ -23,9 +23,8 @@
       block:
         - name: Trigger Soft Reboot
           openstack.cloud.server_action:
-            action: reboot
+            action: reboot_soft
             server: "{{ inventory_hostname }}"
-            reboot_type: SOFT
           
         - name: Wait 30s for reboot to initiate
           ansible.builtin.pause:
@@ -54,9 +53,8 @@
       block:
         - name: Trigger Hard Reboot
           openstack.cloud.server_action:
-            action: reboot
+            action: reboot_hard
             server: "{{ inventory_hostname }}"
-            reboot_type: HARD
 
         - name: Wait 30s for hardware cycle
           ansible.builtin.pause:
