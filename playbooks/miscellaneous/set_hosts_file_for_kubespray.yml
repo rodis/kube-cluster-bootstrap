@@ -1,0 +1,20 @@
+---
+- name: Update /etc/hosts with inventory hostnames
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure 127.0.0.1 has the current hostname
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.0\.1'
+        line: "127.0.0.1 localhost {{ inventory_hostname }}"
+        state: present
+
+    - name: Add other inventory hosts to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: ".*{{ item }}$"
+        line: "{{ hostvars[item]['ansible_host'] | default(hostvars[item]['ansible_ssh_host']) }} {{ item }}"
+        state: present
+      loop: "{{ groups['all'] }}"
+      when: item != inventory_hostname

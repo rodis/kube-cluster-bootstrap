@@ -30,3 +30,7 @@ variable "NODES" {
   description = "Number of kubernetes nodes"
   type = number
 }
+variable "ETCD" {
+  description = "Number of etcd nodes"
+  type = number
+}
