@@ -1,0 +1,73 @@
+---
+- name: Monitor and Recover OpenStack Instances
+  hosts: all
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: Check SSH connectivity
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        timeout: 10
+        state: started
+      register: ssh_check
+      ignore_errors: yes
+
+    - name: Recovery Process (Soft Reboots)
+      block:
+        - name: Attempt Soft Reboot (Iteration 1 & 2)
+          openstack.cloud.server_action:
+            action: reboot
+            server: "{{ inventory_hostname }}"
+            reboot_type: SOFT
+          when: ssh_check.failed
+          loop: [1, 2]
+          loop_control:
+            pause: 30
+
+        - name: Re-check SSH after Soft Reboots
+          ansible.builtin.wait_for:
+            host: "{{ ansible_host }}"
+            port: 22
+            timeout: 10
+          register: ssh_check_post_soft
+          when: ssh_check.failed
+          ignore_errors: yes
+
+    - name: Recovery Process (Hard Reboot)
+      block:
+        - name: Attempt Hard Reboot
+          openstack.cloud.server_action:
+            action: reboot
+            server: "{{ inventory_hostname }}"
+            reboot_type: HARD
+          when: 
+            - ssh_check.failed 
+            - ssh_check_post_soft.failed | default(false)
+
+        - name: Wait for recovery after Hard Reboot
+          ansible.builtin.pause:
+            seconds: 30
+          when: 
+            - ssh_check.failed 
+            - ssh_check_post_soft.failed | default(false)
+
+        - name: Final SSH Check
+          ansible.builtin.wait_for:
+            host: "{{ ansible_host }}"
+            port: 22
+            timeout: 20
+          register: final_ssh_check
+          when: 
+            - ssh_check.failed 
+            - ssh_check_post_soft.failed | default(false)
+          ignore_errors: yes
+
+    - name: Fail if still unreachable
+      ansible.builtin.fail:
+        msg: "Instance {{ inventory_hostname }} is still unreachable after all reboot attempts."
+      when: 
+        - ssh_check.failed
+        - final_ssh_check is defined
+        - final_ssh_check.failed
