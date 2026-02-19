@@ -1,11 +1,11 @@
 ---
-- name: Monitor and Recover OpenStack Instances
+- name: OpenStack Instance Self-Healing Playbook
   hosts: all
   gather_facts: no
   connection: local
 
   tasks:
-    - name: Check SSH connectivity
+    - name: Initial SSH Check
       ansible.builtin.wait_for:
         host: "{{ ansible_host }}"
         port: 22
@@ -14,60 +14,70 @@
       register: ssh_check
       ignore_errors: yes
 
-    - name: Recovery Process (Soft Reboots)
+    - name: Set initial recovery status
+      ansible.builtin.set_fact:
+        is_reachable: "{{ not ssh_check.failed }}"
+
+    # --- SOFT REBOOT PHASE ---
+    - name: Attempt Soft Reboots (Max 2)
       block:
-        - name: Attempt Soft Reboot (Iteration 1 & 2)
+        - name: Trigger Soft Reboot
           openstack.cloud.server_action:
             action: reboot
             server: "{{ inventory_hostname }}"
             reboot_type: SOFT
-          when: ssh_check.failed
-          loop: [1, 2]
-          loop_control:
-            pause: 30
+          
+        - name: Wait 30s for reboot to initiate
+          ansible.builtin.pause:
+            seconds: 30
 
-        - name: Re-check SSH after Soft Reboots
+        - name: Verify SSH after Soft Reboot
           ansible.builtin.wait_for:
             host: "{{ ansible_host }}"
             port: 22
-            timeout: 10
-          register: ssh_check_post_soft
-          when: ssh_check.failed
+            timeout: 15
+          register: soft_recheck
           ignore_errors: yes
 
-    - name: Recovery Process (Hard Reboot)
+        - name: Update status after Soft Reboot
+          ansible.builtin.set_fact:
+            is_reachable: "{{ not soft_recheck.failed }}"
+
+      # This loop runs twice but stops immediately if is_reachable becomes true
+      when: not is_reachable
+      loop: [1, 2]
+      loop_control:
+        pause: 1 
+
+    # --- HARD REBOOT PHASE ---
+    - name: Attempt Hard Reboot (Last Resort)
       block:
-        - name: Attempt Hard Reboot
+        - name: Trigger Hard Reboot
           openstack.cloud.server_action:
             action: reboot
             server: "{{ inventory_hostname }}"
             reboot_type: HARD
-          when: 
-            - ssh_check.failed 
-            - ssh_check_post_soft.failed | default(false)
 
-        - name: Wait for recovery after Hard Reboot
+        - name: Wait 30s for hardware cycle
           ansible.builtin.pause:
             seconds: 30
-          when: 
-            - ssh_check.failed 
-            - ssh_check_post_soft.failed | default(false)
 
-        - name: Final SSH Check
+        - name: Final SSH Verification
           ansible.builtin.wait_for:
             host: "{{ ansible_host }}"
             port: 22
-            timeout: 20
-          register: final_ssh_check
-          when: 
-            - ssh_check.failed 
-            - ssh_check_post_soft.failed | default(false)
+            timeout: 30
+          register: final_recheck
           ignore_errors: yes
 
-    - name: Fail if still unreachable
+        - name: Update status after Hard Reboot
+          ansible.builtin.set_fact:
+            is_reachable: "{{ not final_recheck.failed }}"
+
+      when: not is_reachable
+
+    # --- FINAL VERDICT ---
+    - name: Fail if unreachable after all attempts
       ansible.builtin.fail:
-        msg: "Instance {{ inventory_hostname }} is still unreachable after all reboot attempts."
-      when: 
-        - ssh_check.failed
-        - final_ssh_check is defined
-        - final_ssh_check.failed
+        msg: "CRITICAL: {{ inventory_hostname }} is still down after 2 soft and 1 hard reboot."
+      when: not is_reachable
