@@ -14,47 +14,36 @@
       register: ssh_check
       ignore_errors: yes
 
-    - name: Set initial recovery status
-      ansible.builtin.set_fact:
-        is_reachable: "{{ not ssh_check.failed }}"
-
     # --- SOFT REBOOT PHASE ---
     - name: Attempt Soft Reboots (Max 2)
-      block:
-        - name: Trigger Soft Reboot
-          openstack.cloud.server_action:
-            action: reboot_soft
-            server: "{{ inventory_hostname }}"
-          
-        - name: Wait 30s for reboot to initiate
-          ansible.builtin.pause:
-            seconds: 30
+      openstack.cloud.server_action:
+        server: "{{ inventory_hostname }}"
+        action: reboot_soft
+      register: soft_reboot_result
+      # Only run if the initial check failed
+      when: ssh_check.failed
+      # Retry logic:
+      until: "soft_reboot_result is success"
+      retries: 1  # 1 retry + 1 initial attempt = 2 total
+      delay: 30   # Wait 30s between attempts
 
-        - name: Verify SSH after Soft Reboot
-          ansible.builtin.wait_for:
-            host: "{{ ansible_host }}"
-            port: 22
-            timeout: 15
-          register: soft_recheck
-          ignore_errors: yes
-
-        - name: Update status after Soft Reboot
-          ansible.builtin.set_fact:
-            is_reachable: "{{ not soft_recheck.failed }}"
-
-      # This loop runs twice but stops immediately if is_reachable becomes true
-      when: not is_reachable
-      loop: [1, 2]
-      loop_control:
-        pause: 1 
+    - name: Re-verify SSH after Soft Reboot attempts
+      ansible.builtin.wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        timeout: 15
+        state: started
+      register: post_soft_check
+      when: ssh_check.failed
+      ignore_errors: yes
 
     # --- HARD REBOOT PHASE ---
     - name: Attempt Hard Reboot (Last Resort)
       block:
         - name: Trigger Hard Reboot
           openstack.cloud.server_action:
-            action: reboot_hard
             server: "{{ inventory_hostname }}"
+            action: reboot_hard
 
         - name: Wait 30s for hardware cycle
           ansible.builtin.pause:
@@ -65,17 +54,19 @@
             host: "{{ ansible_host }}"
             port: 22
             timeout: 30
+            state: started
           register: final_recheck
           ignore_errors: yes
-
-        - name: Update status after Hard Reboot
-          ansible.builtin.set_fact:
-            is_reachable: "{{ not final_recheck.failed }}"
-
-      when: not is_reachable
+      # Only run if initial AND soft reboots failed
+      when: 
+        - ssh_check.failed
+        - post_soft_check.failed
 
     # --- FINAL VERDICT ---
     - name: Fail if unreachable after all attempts
       ansible.builtin.fail:
-        msg: "CRITICAL: {{ inventory_hostname }} is still down after 2 soft and 1 hard reboot."
-      when: not is_reachable
+        msg: "CRITICAL: {{ inventory_hostname }} is still down after recovery cycle."
+      when: 
+        - ssh_check.failed
+        - (post_soft_check.failed | default(false))
+        - (final_recheck.failed | default(true))
