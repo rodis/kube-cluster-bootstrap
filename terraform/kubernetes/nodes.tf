@@ -6,7 +6,8 @@ resource "openstack_compute_instance_v2" "node" {
   key_pair = var.key_pair
   security_groups = [
     "default",
-    openstack_networking_secgroup_v2.kubelet_sec_group.name
+    openstack_networking_secgroup_v2.kubelet_sec_group.name,
+    openstack_networking_secgroup_v2.calico_node_sec_group.name,
   ]
 
   network {
